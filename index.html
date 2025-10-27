@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnackXplosion Menu</title>
+    <!-- Import Gagalin Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Gagalin&display=swap" rel="stylesheet">
+    <style>
+        /* Basic CSS for a clean, professional menu look */
+        body {
+            /* Applied Gagalin font to the entire body */
+            font-family: 'Gagalin', sans-serif;
+            background-color: #000000; /* Solid black background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #ffffff; /* Default text color for the body */
+        }
+
+        .menu-card {
+            background-color: #1a1a1a; /* Darker gray for the card to give depth against black */
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1); /* Subtle white shadow for glow */
+            width: 400px;
+            max-width: 90%;
+            text-align: center;
+            border: 1px solid #333; /* Light border for definition */
+        }
+
+        .logo-container {
+            margin-bottom: 25px;
+        }
+
+        .logo-container img {
+            max-width: 80%; /* Adjust logo size as needed */
+            height: auto;
+            display: block; /* Ensures proper centering */
+            margin: 0 auto; /* Center the logo */
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px dashed #444; /* Lighter dashed separator for dark background */
+        }
+        
+        /* Remove border for the last item */
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-name {
+            font-size: 1.1em;
+            font-weight: 500;
+            color: #f0f0f0; /* Light text for item names */
+            text-align: left;
+        }
+
+        .item-price {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #4CAF50; /* Vibrant green for prices */
+        }
+
+        .note {
+            font-size: 0.85em;
+            color: #bbb; /* Lighter gray for notes */
+            margin-top: 5px;
+            text-align: right;
+            padding-right: 5px; /* Slight padding for alignment */
+            font-weight: normal; /* Keep note text less prominent */
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-card">
+        <div class="logo-container">
+            <img src="logo.jpg" alt="SnackXplosion Logo">
+        </div>
+
+        <div class="menu-item">
+            <span class="item-name">Parotta</span>
+            <span class="item-price">Rs. 50</span>
+        </div>
+
+        <div class="menu-item">
+            <span class="item-name">Pani Puri (5 puris/plate)</span>
+            <span class="item-price">Rs. 40</span>
+        </div>
+
+        <div class="menu-item">
+            <span class="item-name">Cake Pops (pairs)</span>
+            <span class="item-price">Rs. 30</span>
+        </div>
+
+        <div class="menu-item">
+            <span class="item-name">Thattu Vadai</span>
+            <span class="item-price">Rs. 40</span>
+        </div>
+
+        <div class="menu-item">
+            <span class="item-name">Brownie + Ice Cream</span>
+            <span class="item-price">Rs. 70</span>
+        </div>
+        <div class="note">(Brownie only: Rs. 50)</div>
+
+        <div class="menu-item">
+            <span class="item-name">Goli Soda</span>
+            <span class="item-price">Rs. 30</span>
+        </div>
+
+        <div class="menu-item">
+            <span class="item-name">Fruit Punch</span>
+            <span class="item-price">Rs. 40</span>
+        </div>
+
+        <div class="menu-item">
+            <span class="item-name">Samosa</span>
+            <span class="item-price">Rs. 20</span>
+        </div>
+
+        <div class="menu-item">
+            <span class="item-name">Mozzarella Sticks (pairs)</span>
+            <span class="item-price">Rs. 50</span>
+        </div>
+
+    </div>
+</body>
+</html>
+
