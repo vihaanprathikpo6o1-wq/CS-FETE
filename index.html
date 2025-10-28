@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnackXplosion Menu</title>
+    
+    <style>
+        /* 1. Custom Font Definition using @font-face */
+        @font-face {
+            font-family: 'GagalinCustom';
+            /* Looking for both file formats. You must upload at least one of these files to your repository! */
+            src: url('Gagalin.otf') format('opentype'),
+                 url('Gagalin.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        /* Basic CSS for a clean, professional menu look */
+        body {
+            /* Applied the locally defined font */
+            font-family: 'GagalinCustom', sans-serif;
+            background-color: #000000; /* Solid black background */
+            margin: 0;
+            padding: 20px;
+            color: #ffffff;
+        }
+
+        .menu-card {
+            background-color: #1a1a1a;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+            max-width: 800px;
+            width: 90%;
+            margin: 40px auto;
+            text-align: center;
+            border: 1px solid #333;
+        }
+
+        .logo-container {
+            margin-bottom: 25px;
+        }
+
+        .logo-container img {
+            max-width: 300px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* New Subtitle for instructions */
+        .info-note {
+            font-family: Arial, sans-serif;
+            font-size: 0.85em;
+            color: #FF5733; /* Accent color for attention */
+            margin-top: -15px;
+            margin-bottom: 25px;
+            font-weight: bold;
+        }
+
+        /* Container for each item block (Item + Description) */
+        .menu-item-container {
+            border-bottom: 1px dashed #444; 
+        }
+
+        .menu-item-container:last-child {
+            border-bottom: none;
+        }
+
+        /* Main line containing Name, Price, and Toggle */
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            cursor: pointer; /* Makes the entire row feel clickable */
+        }
+        
+        .item-name {
+            font-size: 1.5em;
+            font-weight: 500;
+            color: #f0f0f0;
+            text-align: left;
+        }
+
+        .price-and-toggle {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .item-price {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        /* Dropdown Description Styling (Initial/Collapsed state) */
+        .item-description {
+            padding: 5px 0 0 0; 
+            text-align: left;
+            color: #bbb;
+            font-family: Arial, sans-serif; 
+            font-size: 0.9em;
+            line-height: 1.4;
+            /* CRITICAL FIX: Use generous max-height for reliable transition */
+            transition: max-height 0.4s ease-in-out, padding-bottom 0.4s ease-in-out;
+            max-height: 0; 
+            overflow: hidden;
+        }
+
+        /* Expanded State managed by JS class */
+        .item-description.expanded {
+            max-height: 500px; /* Large height guarantee it expands fully */
+            padding-bottom: 15px;
+        }
+
+        .item-description p {
+            margin: 0;
+            padding-left: 10px;
+            border-left: 3px solid #FF5733; /* Accent color for description */
+        }
+
+        .ingredients-list {
+            margin-top: 5px;
+            font-size: 0.9em;
+            line-height: 1.3;
+            color: #ccc;
+        }
+        
+        .note {
+            font-size: 1em;
+            color: #bbb;
+            margin-top: 5px;
+            text-align: right;
+            padding-right: 5px;
+            font-weight: normal;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Dropdown Toggle Button Styling */
+        .dropdown-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            transition: transform 0.3s ease;
+            outline: none;
+        }
+
+        .dropdown-toggle svg {
+            fill: #f0f0f0; /* Color of the arrow */
+            width: 16px;
+            height: 16px;
+        }
+
+        .dropdown-toggle.rotated {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-card">
+        <div class="logo-container">
+            <img src="logo.jpg" alt="SnackXplosion Logo">
+        </div>
+
+        <p class="info-note">Click the arrows for a quick description and ingredient details!</p>
+
+        <!-- Parotta -->
+        <div class="menu-item-container" onclick="toggleDescription('desc-parotta', this)">
+            <div class="menu-item">
+                <span class="item-name">Parotta</span>
+                <div class="price-and-toggle">
+                    <span class="item-price">Rs. 50</span>
+                    <button class="dropdown-toggle" aria-expanded="false" id="toggle-parotta">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5z"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="item-description" id="desc-parotta">
+                <p>Experience the perfect layered **Parotta**, expertly cooked to be wonderfully flaky on the outside and incredibly soft within. This classic street food delight is a delicious foundation for any meal.</p>
+                <p class="ingredients-list">**Key Ingredients:** Wheat Flour, Oil/Ghee, Water, Salt.</p>
+            </div>
+        </div>
+
+        <!-- Pani Puri -->
+        <div class="menu-item-container" onclick="toggleDescription('desc-panipuri', this)">
+            <div class="menu-item">
+                <span class="item-name">Pani Puri (5 puris/plate)</span>
+                <div class="price-and-toggle">
+                    <span class="item-price">Rs. 40</span>
+                    <button class="dropdown-toggle" aria-expanded="false" id="toggle-panipuri">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5z"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="item-description" id="desc-panipuri">
+                <p>Dive into the iconic street snack! Enjoy 5 crispy, hollow puris filled with spicy, tangy flavored water and a potato mix, guaranteed to deliver an exhilarating **burst of flavor** with every bite.</p>
+                <p class="ingredients-list">**Key Ingredients:** Puris (Semolina/Wheat), Spiced Potato/Chickpea filling, Flavored Water (Pani) with spices.</p>
+            </div>
+        </div>
+
+        <!-- Cake Pops -->
+        <div class="menu-item-container" onclick="toggleDescription('desc-cakepops', this)">
+            <div class="menu-item">
+                <span class="item-name">Cake Pops (pairs)</span>
+                <div class="price-and-toggle">
+                    <span class="item-price">Rs. 30</span>
+                    <button class="dropdown-toggle" aria-expanded="false" id="toggle-cakepops">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5z"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="item-description" id="desc-cakepops">
+                <p>These sweet, **fun treats** are the perfect bite-sized dessert. Enjoy moist cake dipped in a colorful coating, served on a stick for a mess-free and delightful experience.</p>
+                <p class="ingredients-list">**Key Ingredients:** Cake crumbs, Frosting, Chocolate Coating, Food Coloring.</p>
+            </div>
+        </div>
+
+        <!-- Thattu Vadai -->
+        <div class="menu-item-container" onclick="toggleDescription('desc-thattu', this)">
+            <div class="menu-item">
+                <span class="item-name">Thattu Vadai</span>
+                <div class="price-and-toggle">
+                    <span class="item-price">Rs. 40</span>
+                    <button class="dropdown-toggle" aria-expanded="false" id="toggle-thattu">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5z"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="item-description" id="desc-thattu">
+                <p>Get ready for a satisfying, **spicy crunch**! This flattened vada is served with tasty toppings and seasoning, offering a vibrant, flavorful, and truly irresistible street food experience.</p>
+                <p class="ingredients-list">**Key Ingredients:** Rice Flour, Lentils, Spices, Toppings (Onions, Chutney, Carrot).</p>
+            </div>
+        </div>
+
+        <!-- Brownie -->
+        <div class="menu-item-container" onclick="toggleDescription('desc-brownie', this)">
+            <div class="menu-item">
+                <span class="item-name">Brownie</span>
+                <div class="price-and-toggle">
+                    <span class="item-price">Rs. 50</span>
+                    <button class="dropdown-toggle" aria-expanded="false" id="toggle-brownie">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5z"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="item-description" id="desc-brownie">
+                <p>Indulge in our rich, **warm dessert**—a decadent chocolate brownie that's crispy on the edges and beautifully fudgy in the center. Don't forget, you can customize your experience and elevate it with an ice cream addon!</p>
+                <p class="ingredients-list">**Key Ingredients:** Cocoa Powder, Butter, Eggs, Sugar, Flour.</p>
+            </div>
+        </div>
+        <!-- FIXED NOTE/SUBTITLE -->
+        <div class="note">+ Rs. 20 for Ice Cream Addon (Total: Rs. 70)</div>
+
+        <!-- Goli Soda -->
+        <div class="menu-item-container" onclick="toggleDescription('desc-golisoda', this)">
+            <div class="menu-item">
+                <span class="item-name">Goli Soda</span>
+                <div class="price-and-toggle">
+                    <span class="item-price">Rs. 30</span>
+                    <button class="dropdown-toggle" aria-expanded="false" id="toggle-golisoda">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5z"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="item-description" id="desc-golisoda">
+                <p>Quench your thirst with the original **fizzy, refreshing blast**! This unique, traditional soda is sealed with a marble, making the drinking experience as fun as the bubbly taste.</p>
+                <p class="ingredients-list">**Key Ingredients:** Carbonated Water, Sugar, Natural Flavorings (Lime, Orange, etc.).</p>
+            </div>
+        </div>
+
+        <!-- Fruit Punch -->
+        <div class="menu-item-container" onclick="toggleDescription('desc-punch', this)">
+            <div class="menu-item">
+                <span class="item-name">Fruit Punch</span>
+                <div class="price-and-toggle">
+                    <span class="item-price">Rs. 40</span>
+                    <button class="dropdown-toggle" aria-expanded="false" id="toggle-punch">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5z"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="item-description" id="desc-punch">
+                <p>A tropical, **sweet blend** of assorted fruit juices that guarantees maximum refreshment. It's the perfect vibrant and cool drink to pair with any of our savory snacks.</p>
+                <p class="ingredients-list">**Key Ingredients:** Assorted Fruit Juices, Sprite, Fresh Fruit slices.</p>
+            </div>
+        </div>
+
+        <!-- Samosa -->
+        <div class="menu-item-container" onclick="toggleDescription('desc-samosa', this)">
+            <div class="menu-item">
+                <span class="item-name">Samosa</span>
+                <div class="price-and-toggle">
+                    <span class="item-price">Rs. 20</span>
+                    <button class="dropdown-toggle" aria-expanded="false" id="toggle-samosa">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5z"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="item-description" id="desc-samosa">
+                <p>Enjoy our regional twist on a classic! This savory, **spicy pocket** is generously filled with finely sliced, spiced onions and encased in a perfectly crisp pastry shell. It offers a satisfying crunch with a unique, tangy flavor.</p>
+                <p class="ingredients-list">**Key Ingredients:** Refined Flour (Maida), Spiced Onion Filling, Herbs, Oil.</p>
+            </div>
+        </div>
+
+        <!-- Mozzarella Sticks -->
+        <div class="menu-item-container" onclick="toggleDescription('desc-mozza', this)">
+            <div class="menu-item">
+                <span class="item-name">Mozzarella Sticks (pairs)</span>
+                <div class="price-and-toggle">
+                    <span class="item-price">Rs. 50</span>
+                    <button class="dropdown-toggle" aria-expanded="false" id="toggle-mozza">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5z"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="item-description" id="desc-mozza">
+                <p>Get ready for a cheesy, **gooey goodness**! These pairs of mozzarella sticks are lightly fried until golden and served piping hot, ensuring a perfect cheese pull every time.</p>
+                <p class="ingredients-list">**Key Ingredients:** Mozzarella Cheese, Breadcrumbs, Egg, Flour, Seasoning.</p>
+            </div>
+        </div>
+
+    </div>
+    
+    <script>
+        /**
+         * Toggles the visibility of a description using a simple CSS class for smooth transition.
+         * @param {string} descId - The ID of the description element.
+         * @param {HTMLElement} container - The parent container that was clicked (the entire menu item row).
+         */
+        function toggleDescription(descId, container) {
+            const description = document.getElementById(descId);
+            const toggleButton = container.querySelector('.dropdown-toggle');
+            
+            // Toggle the 'expanded' class on the description element
+            const isExpanded = description.classList.toggle('expanded');
+
+            // Toggle the rotated class and aria attribute on the arrow button
+            if (isExpanded) {
+                toggleButton.classList.add('rotated');
+                toggleButton.setAttribute('aria-expanded', 'true');
+            } else {
+                toggleButton.classList.remove('rotated');
+                toggleButton.setAttribute('aria-expanded', 'false');
+            }
+        }
+    </script>
+</body>
+</html>
+
